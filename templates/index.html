@@ -1,0 +1,91 @@
+
+{% extends "layout.html" %}
+{% block navbar %}
+
+{% include "includes/navbar.html" %}
+	
+{% endblock navbar %}
+
+{% block body %}
+<div class="bootstrap snippets" style="margin-top:100px">
+	<div class="col-md-6 col-md-offset-2 col-sm-12 ml-auto mr-auto">
+		<input type="hidden" id="user_id" value="{{ request.user.id }}">
+		{% include "includes/error.html" %}
+		<div>
+			<h3>Post Paylaş</h3>
+			<br>
+			{% csrf_token %}
+			{{postForm.title}}
+			<br>
+			{{postForm.content}}
+			<br>
+			<button type="button" class="btn btn-info pull-right" style="float:right" id="share">Paylaş</button>
+		</div>
+	</div>
+	<br><br><br><br>
+	<div id="postList">
+	{% if allPosts %}
+		{% for post in allPosts %}
+			<div class="col-md-6 col-md-offset-2 col-sm-12 ml-auto mr-auto postsStyle">
+				<div class="comment-wrapper">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							@{{post.owner_id.username}} <br> <p class="ml-2">{{post.title}}<p>
+						</div>
+						<div class="panel-body">
+							<br>
+							<p class="ml-3">
+								{{post.content}}
+							</p>
+							<br>
+							<div class="clearfix"></div>
+							<hr>
+							<ul class="media-list">	
+							{% if post.comments.all %}
+							
+								{% for comment in post.comments.all %}
+									<li class="media">
+										<a href="#" class="pull-left" style="float:left">
+											<img src="media/user_1.jpg" alt="" class="img-circle">
+										</a>
+										<div class="media-body">
+											<span class="text-muted pull-right" style="float:right">
+												<small class="text-muted">30 min ago</small>
+											</span>
+											<strong class="text-success ml-2">@{{comment.post_id.owner_id.username}}</strong>
+											<p class="ml-3">
+												{{comment.comment_content}}
+											</p>
+										</div>
+									</li>
+								{% endfor %}
+							{% endif %}	
+							</ul>
+							<br>
+							<div>
+								{{commentForm.comment_content}}
+								<br>
+								<button type="button" class="btn btn-info pull-right btn-sm addbtn" style="float:right" value="{{post.id}}">Əlavə et</button>
+							</div>
+							<br><br>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% endfor %}
+	{% endif %}
+	</div>
+</div>
+<script type="text/javascript">
+	const COMMENTFORM = `{{commentForm.comment_content}}`;
+	function commentForm(){
+		return COMMENTFORM;
+	}
+</script>
+{% endblock body %}
+{% block myscript %}
+	<script src="static/js/function.js"></script>
+    <script src="static/js/posts.js"></script>
+    <script src="static/js/home.js"></script>
+{% endblock myscript %}
