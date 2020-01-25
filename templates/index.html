@@ -36,7 +36,14 @@
 						{% else %} 
 						<a href="{% url 'info' post.owner_id.id %}">@{{post.owner_id.username}}</a> 
 						{% endif %}
-							<br> <p class="ml-2">{{post.title}}<p>
+							<br> 
+							<p class="ml-2">{{post.title}}
+								<span class="text-muted pull-right mr-3" style="float:right">
+									<small class="text-muted agoDate" >
+										<input type="hidden" value="{{post.created_date.isoformat}}">
+									</small>
+								</span>
+							<p>
 						</div>
 						<div class="panel-body">
 							<br>
@@ -55,8 +62,10 @@
 											<img src="{{ MEDIA_URL }}user_1.jpg" alt="" class="img-circle">
 										</a>
 										<div class="media-body">
-											<span class="text-muted pull-right" style="float:right">
-												<small class="text-muted">30 min ago</small>
+											<span class="text-muted pull-right mr-3" style="float:right">
+												<small class="text-muted agoDate" >
+													<input type="hidden" value="{{comment.comment_date.isoformat}}">
+												</small>
 											</span>
 											<strong class="text-success ml-2">
 											{% if comment.author_id.id == user.id %}
@@ -90,14 +99,27 @@
 	</div>
 </div>
 <script type="text/javascript">
-	const COMMENTFORM = `{{commentForm.comment_content}}`;
-	function commentForm(){
-		return COMMENTFORM;
+
+	function djangoData(){
+		return {
+			commentForm : `{{commentForm.comment_content}}`,
+			profilLink : `{% url 'profil' %}`,
+		};
 	}
+	
+	
 </script>
 {% endblock body %}
 {% block myscript %}
+	<script type="text/javascript">
+		const agoDates = document.querySelectorAll('.agoDate');
+		if (agoDates != null){
+			agoDates.forEach( (a) => {
+				a.innerHTML += timeAgo(new Date(a.querySelector("input").value));
+			});
+		}
+	</script>
 	<script src="static/js/function.js"></script>
-    <script src="static/js/posts.js"></script>
-    <script src="static/js/home.js"></script>
+	<script src="static/js/posts.js"></script>
+	<script src="static/js/home.js"></script>
 {% endblock myscript %}
