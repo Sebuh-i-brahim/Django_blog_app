@@ -1,6 +1,6 @@
 const MONTH_NAMES = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+  'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun',
+  'İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr'
 ];
 
 
@@ -16,13 +16,13 @@ function getFormattedDate(date, prefomattedDate = false, hideYear = false) {
   }
 
   if (prefomattedDate) {
-    return `${ prefomattedDate } at ${ hours }:${ minutes }`;
+    return `${ prefomattedDate } saat ${ hours }:${ minutes }`;
   }
 
   if (hideYear) {
-    return `${ day }. ${ month } at ${ hours }:${ minutes }`;
+    return `${ day }. ${ month } saat ${ hours }:${ minutes }`;
   }
-  return `${ day }. ${ month } ${ year }. at ${ hours }:${ minutes }`;
+  return `${ day }. ${ month } ${ year }. saat ${ hours }:${ minutes }`;
 }
 
 function timeAgo(dateParam) {
@@ -44,15 +44,15 @@ function timeAgo(dateParam) {
   if (seconds < 5) {
     return 'now';
   } else if (seconds < 60) {
-    return `${ seconds } seconds ago`;
+    return `${ seconds } saniyə əvvəl`;
   } else if (seconds < 90) {
-    return 'about a minute ago';
+    return '1 dəq ərzində';
   } else if (minutes < 60) {
-    return `${ minutes } minutes ago`;
+    return `${ minutes } dəqiqə əvvəl`;
   } else if (isToday) {
-    return getFormattedDate(date, 'Today');
+    return getFormattedDate(date, 'Bugün');
   } else if (isYesterday) {
-    return getFormattedDate(date, 'Yesterday');
+    return getFormattedDate(date, 'Dünən');
   } else if (isThisYear) {
     return getFormattedDate(date, false, true);
   }
