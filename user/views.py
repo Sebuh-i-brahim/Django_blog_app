@@ -22,8 +22,6 @@ def home(request):
 	postForm = PostsForm()
 	commentForm = CommentsForm()
 	allPosts = Posts.objects.all()
-	for ps in allPosts:
-		print(ps.comments.all())
 	return render(request, 'index.html', {
 		'postForm' : postForm,
 		'commentForm': commentForm,
@@ -51,7 +49,6 @@ def js_reqCom(request):
 	if request.is_ajax():
 		if request.method == 'POST':
 			data = json.loads(request.body)
-			print(data)
 			form = CommentsForm(data)
 			if form.is_valid():
 				com_content = form.cleaned_data.get('comment_content')
@@ -84,13 +81,11 @@ def profil(request):
 @login_required(login_url="login")
 def info(request, id = None, username = None):
 	user = {}
-	print(id)
 	if id:
 		user = get_object_or_404(User, id = id)
 	if username:
 		user = get_object_or_404(User, username = username)
-	print(user)
 	if user:
 		all_posts = user.posts.all()
 		return render(request, "info.html", {'posts' : all_posts, 'username' : user.username})
-	return None
+	return HttpResponse('Page Not Found', status=404)
