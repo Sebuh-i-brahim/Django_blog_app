@@ -31,7 +31,7 @@ class UserPosts {
 		` + postList.innerHTML;
 	}
 	addComment(data){
-		const href = document.querySelector('.profilLink').href;
+		const href = document.querySelector('.profil-link').href;
 		data.element.innerHTML = `
 			<li class="media">
 				<a href="#" class="pull-left" style="float:left">
