@@ -34,7 +34,7 @@ urlpatterns = [
     path('createPost/', main.js_request, name='fetch'),
     path('createComment/', main.js_reqCom, name='fetchCom'),
     path('profil/', main.profil, name='profil'),
-    path('<int:id>/' or '<string:username>/', main.info, name='info'),
+    path('info/<int:id>/' or 'info/<string:username>/', main.info, name='info'),
 ]
 
 if settings.DEBUG:

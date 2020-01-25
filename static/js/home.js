@@ -44,7 +44,6 @@ share.onclick = () => {
 
 postList.onclick = (e)=>{
 	if (e.target.classList == "btn btn-info pull-right btn-sm addbtn") {
-		console.log(e.target);
 		let com_content = e.target.parentElement.querySelector(".CommentForm").value;
 		console.log(com_content);
 		console.log(e.target.value);
@@ -77,6 +76,10 @@ postList.onclick = (e)=>{
 						break;
 			}
 		});
+	}
+	// console.log(e.target.tagName);
+	if (e.target.tagName == 'A') {
+		window.location.href = e.target.href;
 	}
 	e.preventDefault();
 }

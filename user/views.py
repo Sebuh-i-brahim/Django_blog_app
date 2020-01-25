@@ -82,6 +82,15 @@ def profil(request):
 	return render(request, "profil.html", {'posts': all_posts})
 
 @login_required(login_url="login")
-def info(request):
-	# user = get_object_or_404()
-	pass
+def info(request, id = None, username = None):
+	user = {}
+	print(id)
+	if id:
+		user = get_object_or_404(User, id = id)
+	if username:
+		user = get_object_or_404(User, username = username)
+	print(user)
+	if user:
+		all_posts = user.posts.all()
+		return render(request, "info.html", {'posts' : all_posts, 'username' : user.username})
+	return None

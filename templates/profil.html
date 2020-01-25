@@ -31,7 +31,7 @@
 								{% for comment in post.comments.all %}
 									<li class="media">
 										<a href="#" class="pull-left" style="float:left">
-											<img src="media/user_1.jpg" alt="" class="img-circle">
+											<img src="{{ MEDIA_URL }}user_1.jpg" alt="" class="img-circle">
 										</a>
 										<div class="media-body">
 											<span class="text-muted pull-right" style="float:right">
@@ -41,7 +41,7 @@
 											{% if comment.author_id.id == user.id %}
 											   @You
 											{% else %}
-												@{{comment.author_id.username}}
+												<a href="{% url 'info' comment.author_id.id %}">@{{comment.author_id.username}}</a>
 											{% endif %}
 											</strong>
 											<p class="ml-3">

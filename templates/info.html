@@ -1,4 +1,3 @@
-
 {% extends "layout.html" %}
 {% block navbar %}
 
@@ -8,35 +7,15 @@
 
 {% block body %}
 <div class="bootstrap snippets" style="margin-top:100px">
-	<div class="col-md-6 col-md-offset-2 col-sm-12 ml-auto mr-auto">
-		<input type="hidden" id="user_id" value="{{ request.user.id }}">
-		{% include "includes/error.html" %}
-		<div>
-			<h3>Post Paylaş</h3>
-			<br>
-			{% csrf_token %}
-			{{postForm.title}}
-			<br>
-			{{postForm.content}}
-			<br>
-			<button type="button" class="btn btn-info pull-right" style="float:right" id="share">Paylaş</button>
-		</div>
-	</div>
-	<br><br><br><br>
+	<br>
 	<div id="postList">
-	{% if allPosts %}
-		{% for post in allPosts %}
+	{% if posts %}
+		{% for post in posts %}
 			<div class="col-md-6 col-md-offset-2 col-sm-12 ml-auto mr-auto postsStyle">
 				<div class="comment-wrapper">
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							
-						{% if user.id == post.owner_id.id %}
-						<a href="{% url 'profil' %}">@You</a>
-						{% else %} 
-						<a href="{% url 'info' post.owner_id.id %}">@{{post.owner_id.username}}</a> 
-						{% endif %}
-							<br> <p class="ml-2">{{post.title}}<p>
+							@{{post.owner_id.username}} <br> <p class="ml-2">{{post.title}}<p>
 						</div>
 						<div class="panel-body">
 							<br>
@@ -60,10 +39,10 @@
 											</span>
 											<strong class="text-success ml-2">
 											{% if comment.author_id.id == user.id %}
-											    <a href="{% url 'profil' %}">@You</a>
+											   @You
 											{% else %}
-											    <a href="{% url 'info' comment.author_id.id %}">@{{comment.author_id.username}}</a>
-											{% endif %}	
+												@{{comment.author_id.username}}
+											{% endif %}
 											</strong>
 											<p class="ml-3">
 												{{comment.comment_content}}
@@ -74,11 +53,6 @@
 							{% endif %}	
 							</ul>
 							<br>
-							<div>
-								{{commentForm.comment_content}}
-								<br>
-								<button type="button" class="btn btn-info pull-right btn-sm addbtn" style="float:right" value="{{post.id}}">Əlavə et</button>
-							</div>
 							<br><br>
 						</div>
 					</div>
@@ -86,18 +60,13 @@
 			</div>
 
 		{% endfor %}
+	{% else %}
+	    	<div class="alert alert-danger"><h3>{{ username }} not Any post yet</h3></div>
 	{% endif %}
 	</div>
 </div>
-<script type="text/javascript">
-	const COMMENTFORM = `{{commentForm.comment_content}}`;
-	function commentForm(){
-		return COMMENTFORM;
-	}
-</script>
 {% endblock body %}
 {% block myscript %}
-	<script src="static/js/function.js"></script>
-    <script src="static/js/posts.js"></script>
-    <script src="static/js/home.js"></script>
+
 {% endblock myscript %}
+
