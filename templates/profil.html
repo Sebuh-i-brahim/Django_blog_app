@@ -1,6 +1,70 @@
 {% extends "layout.html" %}
+{% block navbar %}
 
+{% include "includes/navbar.html" %}
+	
+{% endblock navbar %}
 
 {% block body %}
+<div class="bootstrap snippets" style="margin-top:100px">
+	<br>
+	<div id="postList">
+	{% if posts %}
+		{% for post in posts %}
+			<div class="col-md-6 col-md-offset-2 col-sm-12 ml-auto mr-auto postsStyle">
+				<div class="comment-wrapper">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							@You <br> <p class="ml-2">{{post.title}}<p>
+						</div>
+						<div class="panel-body">
+							<br>
+							<p class="ml-3">
+								{{post.content}}
+							</p>
+							<br>
+							<div class="clearfix"></div>
+							<hr>
+							<ul class="media-list">	
+							{% if post.comments.all %}
+							
+								{% for comment in post.comments.all %}
+									<li class="media">
+										<a href="#" class="pull-left" style="float:left">
+											<img src="media/user_1.jpg" alt="" class="img-circle">
+										</a>
+										<div class="media-body">
+											<span class="text-muted pull-right" style="float:right">
+												<small class="text-muted">30 min ago</small>
+											</span>
+											<strong class="text-success ml-2">
+											{% if comment.author_id.id == user.id %}
+											   @You
+											{% else %}
+												@{{comment.author_id.username}}
+											{% endif %}
+											</strong>
+											<p class="ml-3">
+												{{comment.comment_content}}
+											</p>
+										</div>
+									</li>
+								{% endfor %}
+							{% endif %}	
+							</ul>
+							<br>
+							<br><br>
+						</div>
+					</div>
+				</div>
+			</div>
 
+		{% endfor %}
+	{% endif %}
+	</div>
+</div>
 {% endblock body %}
+{% block myscript %}
+	<script src="static/js/function.js"></script>
+{% endblock myscript %}
+

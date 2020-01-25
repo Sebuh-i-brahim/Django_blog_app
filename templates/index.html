@@ -30,7 +30,13 @@
 				<div class="comment-wrapper">
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							@{{post.owner_id.username}} <br> <p class="ml-2">{{post.title}}<p>
+							
+						{% if user.id == post.owner_id.id %}
+						@You
+						{% else %} 
+						@{{post.owner_id.username}} 
+						{% endif %}
+							<br> <p class="ml-2">{{post.title}}<p>
 						</div>
 						<div class="panel-body">
 							<br>
@@ -52,7 +58,13 @@
 											<span class="text-muted pull-right" style="float:right">
 												<small class="text-muted">30 min ago</small>
 											</span>
-											<strong class="text-success ml-2">@{{comment.post_id.owner_id.username}}</strong>
+											<strong class="text-success ml-2">
+											{% if comment.author_id.id == user.id %}
+											    @You
+											{% else %}
+											    @{{comment.author_id.username}}
+											{% endif %}	
+											</strong>
 											<p class="ml-3">
 												{{comment.comment_content}}
 											</p>

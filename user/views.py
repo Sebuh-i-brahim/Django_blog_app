@@ -56,9 +56,11 @@ def js_reqCom(request):
 			if form.is_valid():
 				com_content = form.cleaned_data.get('comment_content')
 				posts = Posts.objects.get(id=data.get('id'))
-				new_com = Comments(author_id = request.user.id,comment_content = com_content)
+				new_com = Comments(comment_content = com_content)
 				new_com.post_id = posts
+				new_com.author_id = request.user
 				new_com.save()
+				res_data = {}
 				if request.user.id != posts.owner_id.id:
 					send_email({
 						'header' : request.user.username + " Comment to your posts",
@@ -73,3 +75,13 @@ def js_reqCom(request):
 				return JsonResponse({'status' : 'OK', 'req_data' : res_data})
 			return JsonResponse({'status' : 'Error','errormsg' : form.errors.comment_content})
 	return JsonResponse({'status' : 'BAD'})
+
+@login_required(login_url="login")
+def profil(request):
+	all_posts = request.user.posts.all()
+	return render(request, "profil.html", {'posts': all_posts})
+
+@login_required(login_url="login")
+def info(request):
+	# user = get_object_or_404()
+	pass
