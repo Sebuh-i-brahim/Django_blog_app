@@ -12,6 +12,6 @@ def sleepy(second):
 
 @shared_task
 def send_email(data):
-	sleepy(5)
+	sleepy(2)
 	send_mail(data['header'], data['body'], data['sender'], data['recivers'])
 	return None
