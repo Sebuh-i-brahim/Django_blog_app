@@ -83,3 +83,4 @@ postList.onclick = (e)=>{
 	}
 	e.preventDefault();
 }
+

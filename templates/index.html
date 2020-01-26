@@ -83,6 +83,9 @@
 							{% endif %}	
 							</ul>
 							<br>
+						</div>
+						<br>
+						<div class="panel-footer">
 							<div>
 								{{commentForm.comment_content}}
 								<br>
@@ -93,7 +96,6 @@
 					</div>
 				</div>
 			</div>
-
 		{% endfor %}
 	{% endif %}
 	</div>
@@ -111,6 +113,9 @@
 </script>
 {% endblock body %}
 {% block myscript %}
+	<script src="static/js/function.js"></script>
+	<script src="static/js/posts.js"></script>
+	<script src="static/js/home.js"></script>
 	<script type="text/javascript">
 		const agoDates = document.querySelectorAll('.agoDate');
 		if (agoDates != null){
@@ -119,7 +124,4 @@
 			});
 		}
 	</script>
-	<script src="static/js/function.js"></script>
-	<script src="static/js/posts.js"></script>
-	<script src="static/js/home.js"></script>
 {% endblock myscript %}

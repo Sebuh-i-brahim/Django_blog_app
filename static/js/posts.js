@@ -18,6 +18,9 @@ class UserPosts {
 							<ul class="media-list">	
 							</ul>
 							<br>
+						</div>
+						<br>
+						<div class="panel-footer">
 							<div>
 								${dj.commentForm}
 								<br>
