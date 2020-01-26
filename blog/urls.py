@@ -35,6 +35,7 @@ urlpatterns = [
     path('createComment/', main.js_reqCom, name='fetchCom'),
     path('profil/', main.profil, name='profil'),
     path('info/<int:id>/' or 'info/<string:username>/', main.info, name='info'),
+    path('category/<int:id>/', main.category, name='category'),
 ]
 
 if settings.DEBUG:

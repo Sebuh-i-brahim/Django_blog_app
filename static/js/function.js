@@ -20,3 +20,13 @@ function getCookie(name) {
     return cookieValue;
 }
 
+function multiSelect(element){
+    options = element.querySelectorAll('option');
+    data = [];
+    options.forEach((item)=>{
+        if (item.selected) {
+            data.push(item.value);
+        }
+    });
+    return data;
+}

@@ -3,11 +3,13 @@ class UserPosts {
 		const postList = document.querySelector("#postList");
 		let dj = djangoData();
 		postList.innerHTML = `
-			<div class="col-md-6 col-md-offset-2 col-sm-12 ml-auto mr-auto postsStyle">
+			<div class="col-md-6 col-md-offset-2 col-sm-12 postsStyle">
 				<div class="comment-wrapper">
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<a href="${dj.profilLink}">@You</a><br><p class="ml-2">${newPost.title}</p>
+							<p class="ml-2">Kategoriya: ${data.category}</p>
+							<p class="ml-3 postSubcategory">Subkategoriyaları: ${data.subcat.toString()}</p>
 						</div>
 						<div class="panel-body">
 							<p class="ml-3">
@@ -35,8 +37,7 @@ class UserPosts {
 	}
 	addComment(data){
 		const href = document.querySelector('.profil-link').href;
-		data.element.innerHTML = `
-			<li class="media">
+		let comm_retun = `<li class="media">
 				<a href="#" class="pull-left" style="float:left">
 					<img src="media/user_1.jpg" alt="" class="img-circle">
 				</a>
@@ -49,7 +50,7 @@ class UserPosts {
 						${data.comment_content}
 					</p>
 				</div>
-			</li>
-		` + data.element.innerHTML;
+			</li>`;
+		return comm_retun;
 	}
 }

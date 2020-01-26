@@ -6,7 +6,7 @@ from django.http import JsonResponse
 
 from .forms import PostsForm, CommentsForm
 
-from .models import Posts, Comments
+from .models import Posts, Comments, Categorie, SubCategory
 
 from django.contrib import messages
 
@@ -22,25 +22,38 @@ def home(request):
 	postForm = PostsForm()
 	commentForm = CommentsForm()
 	allPosts = Posts.objects.all()
+	Categories = Categorie.objects.all()
 	return render(request, 'index.html', {
 		'postForm' : postForm,
 		'commentForm': commentForm,
 		'allPosts' : allPosts,
+		'Categories' : Categories,
 	})
 @login_required(login_url="login")
 def js_request(request):
 	if request.is_ajax():
 		if request.method == 'POST':
 			data = json.loads(request.body)
+			print(data)
 			form = PostsForm(data)
 			if form.is_valid():
 				title = form.cleaned_data.get('title')
 				content = form.cleaned_data.get('content')
-				q = request.user.posts_set.create(
-					title = title,
-					content = content,
-					)	
-				return JsonResponse({'status' : 'OK', 'id': q.id, 'username': request.user.username})
+				category = Categorie.objects.get(id=data.get('category'))
+				sublist = []
+				for id in data.get('sub_category'):
+					sublist.append(SubCategory.objects.get(id=id).name)
+				p = Posts(title=title,content=content,subcategory=json.dumps(sublist))
+				p.owner_id = request.user
+				p.category = category
+				p.save()	
+				return JsonResponse({
+					'status' : 'OK',
+					'id': p.id,
+					'username': request.user.username,
+					'category': category.categorie_name,
+					'subCat' : sublist,
+					})
 			return JsonResponse({'status' : 'Error', 'errors': form.errors})
 	return JsonResponse({'status' : 'BAD'})
 
@@ -89,3 +102,12 @@ def info(request, id = None, username = None):
 		all_posts = user.posts.all()
 		return render(request, "info.html", {'posts' : all_posts, 'username' : user.username})
 	return HttpResponse('Page Not Found', status=404)
+
+@login_required(login_url="login")
+def category(request, id):
+	cat = get_object_or_404(Categorie, id=id)
+	subcat = cat.category.all()
+	data = []
+	for sub in subcat:
+		data.append({'id': sub.id, 'name': sub.name}) 
+	return JsonResponse({'status': 'OK', 'data' : data})
