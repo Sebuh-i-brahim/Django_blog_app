@@ -9,7 +9,7 @@
 {% block body %}
 <div class="bootstrap snippets" style="margin-top:100px">
 	<div class="row">
-		<div class="col-md-6 col-md-offset-2 col-sm-12">
+		<div class="col-md-6 col-md-offset-2 col-sm-12 myForm">
 			<input type="hidden" id="user_id" value="{{ request.user.id }}">
 			{% include "includes/error.html" %}
 			<div class="">
@@ -47,13 +47,19 @@
 				<button type="button" class="btn btn-info pull-right" style="float:right" id="share">Paylaş</button>
 			</div>
 		</div>
-		<div class="col-md-4 ml-auto mr-auto">
+		<div class="col-md-4 col-md-offset-2 col-sm-12 ml-auto mr-auto categories">
 			<h3>Kategoriyalar</h3>
 			{% if Categories %}
-			{% for category in Categories %}
+			{% for cat in Categories %}
+				<h5>{{ cat.categorie_name}}</h5>
 				<ul>
-					<li>{{ category.categorie_name}}</li>
+				{% if cat.category.all %}
+				    {% for subcat in cat.category.all %}
+				    	<li>{{subcat.name}}</li>
+				    {% endfor %}			
+				{% endif %}
 				</ul>
+				<br>
 			{% endfor %}	
 			{% endif %}
 		</div>

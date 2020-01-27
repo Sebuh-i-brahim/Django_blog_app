@@ -132,3 +132,20 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+.myForm{
+  background-color: #F4F7FA;
+  border: 1px solid #CEE7FF;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.categories{
+  background-color: #79FC99;
+  border: 1px solid #CEE7FF;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

@@ -13,39 +13,46 @@ const category = document.querySelector('#category');
 const subCategory = document.querySelector('#subCategory')
 
 share.onclick = () => {
-	postData('createPost/', {
-		title: title.value,
-		content: content.value,
-		category: category.value,
-		sub_category: multiSelect(subCategory),
-	}, new Headers({
-      'X-Requested-With' : 'XMLHttpRequest',
-      'X-CSRFToken' : csrftoken,
-      "Accept": "application/json",
-      'Content-Type': 'application/json;charset=utf-8',
-    })).then((data)=>{
-		console.log(data);
-		switch (data.status) {
-			case "OK":
-				const newPost = new UserPosts();
-				newPost.addPost({
-					title: title.value,
-					content: content.value,
-					id: data.id,
-					username : data.username,
-					category : data.category,
-					subcat : data.subCat,
-				});
-				break;
-			case "Error":
-				alert(data.form.errors.title + "\n" + data.form.errors.content);
-			case "BAD":
-				alert("You don't have any permission to do that!");
-			default:
-				// statements_def
-				break;
-		}
-	})
+	if (isNaN(category.value)) {
+		alert("Kategoriya seçilməlidir");
+	}else if (multiSelect(subCategory).length == 0) {
+		alert("SubKateqoriyalar seçilməlidir");
+	}else{
+		postData('createPost/', {
+			title: title.value,
+			content: content.value,
+			category: category.value,
+			sub_category: multiSelect(subCategory),
+		}, new Headers({
+	      'X-Requested-With' : 'XMLHttpRequest',
+	      'X-CSRFToken' : csrftoken,
+	      "Accept": "application/json",
+	      'Content-Type': 'application/json;charset=utf-8',
+	    })).then((data)=>{
+			console.log(data);
+			switch (data.status) {
+				case "OK":
+					const newPost = new UserPosts();
+					newPost.addPost({
+						title: title.value,
+						content: content.value,
+						id: data.id,
+						username : data.username,
+						category : data.category,
+						subcat : data.subCat,
+					});
+					break;
+				case "Error":
+					alert(data.form.errors.title + "\n" + data.form.errors.content);
+				case "BAD":
+					alert("You don't have any permission to do that!");
+				default:
+					// statements_def
+					break;
+			}
+		});
+	}
+	
 };
 
 postList.onclick = (e)=>{

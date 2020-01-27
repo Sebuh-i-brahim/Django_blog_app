@@ -8,8 +8,8 @@ class UserPosts {
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<a href="${dj.profilLink}">@You</a><br><p class="ml-2">${newPost.title}</p>
-							<p class="ml-2">Kategoriya: ${data.category}</p>
-							<p class="ml-3 postSubcategory">Subkategoriyaları: ${data.subcat.toString()}</p>
+							<p class="ml-2">Kategoriya: ${newPost.category}</p>
+							<p class="ml-3 postSubcategory">Subkategoriyaları: ${newPost.subcat.toString()}</p>
 						</div>
 						<div class="panel-body">
 							<p class="ml-3">
