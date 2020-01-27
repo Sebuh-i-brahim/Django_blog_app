@@ -26,7 +26,7 @@ from my_auth import views as log_reg
 from user import views as main
 
 urlpatterns = [
-    path('i_am_admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', main.home, name='index'),
     path('login/', log_reg.my_login, name='login'),
     path('register/', log_reg.my_register, name='register'),
