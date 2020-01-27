@@ -26,7 +26,7 @@ from my_auth import views as log_reg
 from user import views as main
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('i_am_admin/', admin.site.urls),
     path('', main.home, name='index'),
     path('login/', log_reg.my_login, name='login'),
     path('register/', log_reg.my_register, name='register'),
@@ -36,6 +36,7 @@ urlpatterns = [
     path('profil/', main.profil, name='profil'),
     path('info/<int:id>/' or 'info/<string:username>/', main.info, name='info'),
     path('category/<int:id>/', main.category, name='category'),
+    path('refresh/', main.refresh, name='refresh'),
 ]
 
 if settings.DEBUG:

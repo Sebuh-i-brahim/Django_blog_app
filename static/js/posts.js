@@ -42,7 +42,7 @@ class UserPosts {
 					<img src="media/user_1.jpg" alt="" class="img-circle">
 				</a>
 				<div class="media-body">
-					<span class="text-muted pull-right" style="float:right">
+					<span class="text-muted pull-right mr-3" style="float:right">
 						<small class="text-muted">now</small>
 					</span>
 					<strong class="text-success" ml-2><a href="${href}">@You<a></strong>

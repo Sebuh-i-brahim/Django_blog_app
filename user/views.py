@@ -111,3 +111,52 @@ def category(request, id):
 	for sub in subcat:
 		data.append({'id': sub.id, 'name': sub.name}) 
 	return JsonResponse({'status': 'OK', 'data' : data})
+
+@login_required(login_url="login")
+def refresh(request):
+	allPosts = Posts.objects.all()
+	data = []
+	url = ''
+	urlText = ''
+	for post in allPosts:
+		if request.user.id == post.owner_id.id:
+			url = 'profil/'
+			urlText = '@You'
+		else:
+			url = 'info/'+str(post.owner_id.id)+'/'
+			urlText = '@'+post.owner_id.username
+		title = post.title
+		post_date = post.created_date.isoformat()
+		post_category = post.category.categorie_name
+		post_subcat = post.subcategory
+		content = post.content
+		comments = []
+		for comment in post.comments.all():
+			com_url = ''
+			com_urlText = ''
+			if comment.author_id.id == request.user.id:
+				com_url = 'profil/'
+				com_urlText = '@You'
+			else:
+				com_url = 'info/' + str(comment.author_id.id) + '/'
+				com_urlText = '@' + comment.author_id.username
+			com_date = comment.comment_date.isoformat()
+			com_content = comment.comment_content
+			comments.append({
+				'url' : com_url,
+				'urlText': com_urlText,
+				'date': com_date,
+				'content' : com_content, 
+				})
+		data.append({
+			'url': url,
+			'urlText': urlText,
+			'title' : title,
+			'date' : post_date,
+			'category' : post_category,
+			'subcat' : post_subcat,
+			'content' : content,
+			'comments' : comments,
+			'id' : post.id,
+			})
+	return JsonResponse({'status': 'OK', 'data' : data})

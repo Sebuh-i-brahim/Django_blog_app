@@ -58,8 +58,6 @@ share.onclick = () => {
 postList.onclick = (e)=>{
 	if (e.target.classList == "btn btn-info pull-right btn-sm addbtn") {
 		let com_content = e.target.parentElement.querySelector(".CommentForm").value;
-		console.log(com_content);
-		console.log(e.target.value);
 		const el = e.target.parentElement.parentElement.parentElement.querySelector(".media-list");
 		postData('createComment/',{
 			comment_content: com_content,
